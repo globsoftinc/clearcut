@@ -1,6 +1,4 @@
-# Dev environment
-pip
-autopep8
-
-# App
-flask
+Flask==3.0.0
+rembg[gpu]==2.0.68
+Pillow>=10.0.0
+numpy>=1.24.0
