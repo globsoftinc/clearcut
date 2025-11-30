@@ -11,9 +11,20 @@ const downloadBtn = document.getElementById('downloadBtn');
 const newImageBtn = document.getElementById('newImageBtn');
 
 let processedImageBlob = null;
+let turnstileToken = null;
+
+// Turnstile callback function
+window.onTurnstileSuccess = function(token) {
+    turnstileToken = token;
+    console.log('Turnstile verification successful');
+};
 
 // Event Listeners
-browseBtn.addEventListener('click', () => fileInput.click());
+browseBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    fileInput.click();
+});
+
 uploadArea.addEventListener('click', () => fileInput.click());
 fileInput.addEventListener('change', handleFileSelect);
 newImageBtn.addEventListener('click', resetUpload);
@@ -32,7 +43,7 @@ uploadArea.addEventListener('dragleave', () => {
 uploadArea.addEventListener('drop', (e) => {
     e.preventDefault();
     uploadArea.classList.remove('dragover');
-    
+
     const files = e.dataTransfer.files;
     if (files.length > 0) {
         handleFile(files[0]);
@@ -55,21 +66,27 @@ function handleFile(file) {
         showError('Please upload a valid image file (JPG, PNG, or WEBP)');
         return;
     }
-    
+
     // Validate file size (16MB)
     const maxSize = 16 * 1024 * 1024;
     if (file.size > maxSize) {
         showError('File size must be less than 16MB');
         return;
     }
-    
+
+    // Check if Turnstile token is available
+    if (!turnstileToken) {
+        showError('Please complete the verification first');
+        return;
+    }
+
     // Show original image preview
     const reader = new FileReader();
     reader.onload = (e) => {
         originalImage.src = e.target.result;
     };
     reader.readAsDataURL(file);
-    
+
     // Process the image
     processImage(file);
 }
@@ -79,39 +96,47 @@ async function processImage(file) {
     // Show processing state
     uploadContent.style.display = 'none';
     processingContent.style.display = 'block';
-    
+
     try {
         // Create form data
         const formData = new FormData();
         formData.append('image', file);
-        
+        formData.append('turnstile_token', turnstileToken);
+
         // Send to API
         const response = await fetch('/api/remove-background', {
             method: 'POST',
             body: formData
         });
-        
+
         if (!response.ok) {
             const error = await response.json();
             throw new Error(error.error || 'Processing failed');
         }
-        
+
         // Get the processed image
         processedImageBlob = await response.blob();
         const imageUrl = URL.createObjectURL(processedImageBlob);
-        
+
         // Display result
         processedImage.src = imageUrl;
-        
+
         // Show result area
         uploadArea.style.display = 'none';
         resultArea.style.display = 'block';
-        
+
         // Smooth scroll to result
         setTimeout(() => {
             resultArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
-        
+
+        // Reset turnstile token after successful processing
+        turnstileToken = null;
+        // Reload turnstile widget
+        if (window.turnstile) {
+            window.turnstile.reset();
+        }
+
     } catch (error) {
         console.error('Error processing image:', error);
         showError(error.message || 'Failed to process image. Please try again.');
@@ -122,7 +147,7 @@ async function processImage(file) {
 // Download processed image
 function downloadImage() {
     if (!processedImageBlob) return;
-    
+
     const url = URL.createObjectURL(processedImageBlob);
     const a = document.createElement('a');
     a.href = url;
@@ -131,7 +156,7 @@ function downloadImage() {
     a.click();
     document.body.removeChild(a);
     URL.revokeObjectURL(url);
-    
+
     // Add download animation
     downloadBtn.style.transform = 'scale(0.95)';
     setTimeout(() => {
@@ -147,7 +172,13 @@ function resetUpload() {
     resultArea.style.display = 'none';
     fileInput.value = '';
     processedImageBlob = null;
-    
+
+    // Reset turnstile
+    turnstileToken = null;
+    if (window.turnstile) {
+        window.turnstile.reset();
+    }
+
     // Scroll to upload area
     uploadArea.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
@@ -166,7 +197,7 @@ function showError(message) {
             <span>${message}</span>
         </div>
     `;
-    
+
     // Add styles
     errorDiv.style.cssText = `
         position: fixed;
@@ -181,9 +212,9 @@ function showError(message) {
         z-index: 10000;
         animation: slideDown 0.3s ease;
     `;
-    
+
     document.body.appendChild(errorDiv);
-    
+
     // Remove after 4 seconds
     setTimeout(() => {
         errorDiv.style.animation = 'slideUp 0.3s ease';
@@ -252,7 +283,7 @@ let lastScroll = 0;
 window.addEventListener('scroll', () => {
     const navbar = document.querySelector('.navbar');
     const currentScroll = window.pageYOffset;
-    
+
     if (currentScroll > 100) {
         navbar.style.background = 'rgba(15, 15, 35, 0.95)';
         navbar.style.boxShadow = '0 4px 16px rgba(0, 0, 0, 0.4)';
@@ -260,7 +291,7 @@ window.addEventListener('scroll', () => {
         navbar.style.background = 'rgba(15, 15, 35, 0.8)';
         navbar.style.boxShadow = 'none';
     }
-    
+
     lastScroll = currentScroll;
 });
 
