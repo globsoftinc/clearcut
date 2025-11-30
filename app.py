@@ -1,12 +1,10 @@
 from flask import Flask, request, send_file, render_template, jsonify
+from rembg import remove
 from PIL import Image
 import io
 import os
-from withoutbg import WithoutBG
 
 app = Flask(__name__)
-
-model = WithoutBG.opensource()
 
 # Configure max upload size (16MB)
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
@@ -34,10 +32,10 @@ def remove_background():
             return jsonify({'error': 'No file selected'}), 400
         
         # Read the image file
-        input_image = file.read()
+        input_image = Image.open(file.stream)
         
-        # Remove background using WithoutBG (returns PIL Image)
-        output_image = model.remove_background(input_image)
+        # Remove background using rembg (returns PIL Image with transparent background)
+        output_image = remove(input_image)
         
         # Save to bytes buffer
         img_io = io.BytesIO()
@@ -59,3 +57,6 @@ def remove_background():
 def health():
     """Health check endpoint"""
     return jsonify({'status': 'healthy', 'service': 'ClearCut Background Remover'})
+
+if __name__ == '__main__':
+    app.run(debug=True, host='0.0.0.0', port=5000)
