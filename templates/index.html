@@ -3,12 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ClearCut - Professional Background Removal Tool</title>
-    <meta name="description" content="Remove backgrounds from images instantly with ClearCut. Free, fast, and completely serverless. No signup required.">
-    <link rel="stylesheet" href="/static/css/style.css">
+
+    <!-- Robots & Sitemap -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+    
+    <!-- Title -->
+    <title>ClearCut - Free, Professional & Hd Background Removal Tool | Built in Nepal</title>
+    
+    <!-- Favicons -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicons/favicon.ico') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicons/favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicons/favicon-16x16.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='favicons/apple-touch-icon.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='favicons/site.webmanifest') }}">
+
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="ClearCut - Free AI Background Remover | Remove BG Instantly">
+    <meta name="description" content="ClearCut is a free, professional AI background remover tool built in Nepal. Remove backgrounds from images instantly. No signup required. 100% Free & Private.">
+    <meta name="keywords" content="background remover, remove bg, free background removal, AI background remover, transparent png, clearcut, globsoft, Nepal AI, Kathmandu tech, image editor, online photo editor, remove background free">
+    <meta name="author" content="GlobSoft Inc.">
+    <meta name="copyright" content="Copyright © 2025 ClearCut by GlobSoft Inc. All rights reserved.">
+    <meta name="language" content="English">
+    <meta name="revisit-after" content="1 days">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://clearcut.globsoft.tech">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://clearcut.globsoft.tech">
+    <meta property="og:title" content="ClearCut - Remove Backgrounds Instantly | Free AI Tool">
+    <meta property="og:description" content="Professional background removal powered by AI. 100% Free, No Signup, No Limits. Built with ❤️ in Nepal for the world.">
+    <meta property="og:site_name" content="ClearCut">
+    <meta property="og:image" content="{{ url_for('static', filename='images/default.png') }}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="ClearCut - AI Background Remover">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://clearcut.globsoft.tech">
+    <meta name="twitter:title" content="ClearCut - Free AI Background Remover">
+    <meta name="twitter:description" content="Remove image backgrounds instantly with AI. Free, fast, and private. No signup needed.">
+    <meta name="twitter:image" content="{{ url_for('static', filename='images/default.png') }}">
+    <meta name="twitter:creator" content="@globsoftinc">
+    <meta name="twitter:site" content="@globsoftinc">
+    
+    <!-- Geo Location Meta Tags (Nepal) -->
+    <meta name="geo.region" content="NP">
+    <meta name="geo.placename" content="Kathmandu">
+    <meta name="geo.position" content="27.7172;85.3240">
+    <meta name="ICBM" content="27.7172, 85.3240">
+    
+    <!-- Mobile App Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="ClearCut">
+    <meta name="application-name" content="ClearCut">
+    <meta name="theme-color" content="#0f0f23">
+    
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ClearCut",
+      "url": "https://clearcut.globsoft.tech",
+      "logo": "https://clearcut.globsoft.tech/static/images/logo.png",
+      "image": "{{ url_for('static', filename='images/default.png') }}",
+      "description": "Professional-grade AI background remover. Free, fast, and secure. No signup required.",
+      "applicationCategory": "DesignApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": "AI Background Removal, PNG Export, No Signup, 100% Free, Private Processing",
+      "provider": {
+        "@type": "Organization",
+        "name": "GlobSoft Inc.",
+        "url": "https://globsoft.tech",
+        "sameAs": [
+          "https://www.facebook.com/globsoftinc",
+          "https://www.instagram.com/globsoftinc",
+          "https://x.com/globsoftinc",
+          "https://www.linkedin.com/company/globsoftinc",
+          "https://youtube.com/@globsoftinc"
+        ]
+      },
+      "areaServed": {
+        "@type": "Country",
+        "name": "Worldwide"
+      },
+      "author": {
+          "@type": "Organization",
+          "name": "GlobSoft Inc.",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "NP",
+            "addressLocality": "Kathmandu"
+          }
+      }
+    }
+    </script>
+    
+    <!-- FAQ Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Is ClearCut free?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, ClearCut is 100% free to use with no hidden costs or premium plans."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Do I need to sign up?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No, you can use ClearCut instantly without creating an account or providing any personal information."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is my data safe?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Yes, we prioritize privacy. Images are processed in real-time and deleted immediately after processing."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- Styles & Fonts -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
     <!-- Navigation -->
@@ -16,16 +159,7 @@
         <div class="container">
             <div class="nav-content">
                 <div class="logo">
-                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                        <rect width="32" height="32" rx="8" fill="url(#logo-gradient)"/>
-                        <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="white"/>
-                        <defs>
-                            <linearGradient id="logo-gradient" x1="0" y1="0" x2="32" y2="32">
-                                <stop offset="0%" stop-color="#6366f1"/>
-                                <stop offset="100%" stop-color="#8b5cf6"/>
-                            </linearGradient>
-                        </defs>
-                    </svg>
+                   <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ClearCut Logo" class="logo-icon">
                     <span>ClearCut</span>
                 </div>
                 <div class="nav-links">
@@ -184,6 +318,13 @@
                         <div class="upload-formats">
                             Supports: JPG, PNG, WEBP (Max 16MB)
                         </div>
+<!-- TURNSTILE WIDGET FOR URL SHORTENER -->
+                        <div class="cf-turnstile" 
+                             data-sitekey="{{ turnstile_site_key }}" 
+                             data-callback="onTurnstileSuccess"
+                             data-theme="light"
+                             style="margin: 1rem 0;">
+                        </div>
                         <button class="btn-primary" id="browseBtn">Choose Image</button>
                     </div>
                     <div class="processing-content" id="processingContent" style="display: none;">
@@ -300,7 +441,7 @@
                 </div>
                 <div class="faq-item">
                     <h3>How accurate is the background removal?</h3>
-                    <p>We use state-of-the-art AI models that provide professional-grade results with precise edge detection, even for complex images with hair and fine details.</p>
+                    <p>We use state-of-the-art AI model that provide professional-grade results with precise edge detection, even for complex images with hair and fine details.</p>
                 </div>
                 <div class="faq-item">
                     <h3>Can I use the images commercially?</h3>
@@ -316,16 +457,7 @@
             <div class="footer-content">
                 <div class="footer-brand">
                     <div class="logo">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-                            <rect width="32" height="32" rx="8" fill="url(#footer-logo-gradient)"/>
-                            <path d="M16 8L24 16L16 24L8 16L16 8Z" fill="white"/>
-                            <defs>
-                                <linearGradient id="footer-logo-gradient" x1="0" y1="0" x2="32" y2="32">
-                                    <stop offset="0%" stop-color="#6366f1"/>
-                                    <stop offset="100%" stop-color="#8b5cf6"/>
-                                </linearGradient>
-                            </defs>
-                        </svg>
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="ClearCut Logo" class="logo-icon">
                         <span>ClearCut</span>
                     </div>
                     <p>Professional background removal,<br/>powered by AI. Always free.</p>
@@ -341,11 +473,14 @@
                         <h4>Support</h4>
                         <a href="#faq">FAQ</a>
                         <a href="#tool">Get Started</a>
+                        <a href="https://globsoft.tech/">Contact Us</a>
                     </div>
+                    
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 ClearCut. Built with ❤️ for creators everywhere.</p>
+                <p><script>document.write(new Date().getFullYear())</script> &copy;  ClearCut. All Rights Reserved</p>
+                <p>Powered by GlobSoft Inc.</p>
             </div>
         </div>
     </footer>
